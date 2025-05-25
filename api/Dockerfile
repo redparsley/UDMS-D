@@ -13,21 +13,22 @@ ENV PYTHONPATH=/app
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         postgresql-client \
+        netcat-traditional \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy project
-COPY . .
-
-# Make start script executable
-RUN chmod +x start.sh
-
 # Create non-root user
 RUN adduser --disabled-password --gecos '' appuser
-RUN chown -R appuser:appuser /app
+
+# Copy project and set permissions
+COPY . .
+COPY start.sh .
+RUN chown -R appuser:appuser /app \
+    && chmod +x /app/start.sh
+
 USER appuser
 
 # Run the application
