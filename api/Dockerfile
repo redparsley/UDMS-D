@@ -14,17 +14,37 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         postgresql-client \
         netcat-traditional \
+        dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy project files and set permissions
+# Copy project files
 COPY . .
-RUN chmod +x start.sh \
-    && chown -R root:root /app \
-    && chmod -R a+rx /app
+
+# Create entrypoint script
+RUN echo '#!/bin/sh\n\
+# Wait for PostgreSQL\n\
+echo "Waiting for PostgreSQL..."\n\
+while ! nc -z db 5432; do\n\
+    sleep 1\n\
+done\n\
+echo "PostgreSQL started"\n\
+\n\
+# Run migrations\n\
+echo "Running migrations..."\n\
+alembic upgrade head\n\
+\n\
+# Start the application\n\
+echo "Starting the application..."\n\
+exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload\n\
+' > /app/entrypoint.sh
+
+# Ensure scripts have correct line endings and permissions
+RUN dos2unix /app/entrypoint.sh \
+    && chmod +x /app/entrypoint.sh
 
 # Run the application
-CMD ["./start.sh"] 
+ENTRYPOINT ["/app/entrypoint.sh"] 

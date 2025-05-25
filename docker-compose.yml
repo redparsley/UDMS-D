@@ -16,6 +16,7 @@ services:
       - ./api:/app
     networks:
       - app-network
+    restart: unless-stopped
 
   frontend:
     build:
@@ -29,6 +30,7 @@ services:
       - REACT_APP_API_URL=http://localhost:8001
     networks:
       - app-network
+    restart: unless-stopped
 
   db:
     image: postgres:15-alpine
@@ -47,6 +49,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
 
 volumes:
   postgres_data:
