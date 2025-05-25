@@ -1,0 +1,38 @@
+:root {
+    /* ОСНОВНАЯ ПАЛИТРА */
+    --accent-blue: #29345B;
+    --dark-blue: #171F29;
+    --academy-red: #CA0F3E;
+    --classic-red: #A00F33;
+
+    /* ДОПОЛНИТЕЛЬНЫЕ ЦВЕТА */
+    --warn-red: #FF5F61; /*акценты, используется для отображения статуса документов (ОТКЛОНЕН)*/
+    --info-blue: #4D56BC; /*используется для отображения статуса документов (НЕ ПОДПИСАН)*/
+    --ice-blue: #D3E0E4; /*используется для отображения статуса документов (НЕ ПРОСМОТРЕН)*/
+    --light-gray: #EDEBF2; /*кнопки, используется для отображения статуса документов (Просмотрен)*/
+}
+
+/* ПОДКЛЮЧЕНИЕ ШРИФТОВ */
+@font-face {
+    font-family: "Manrope";
+    src: url(".//fonts/Manrope-Regular.ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Manrope";
+    src: url(".//fonts/Manrope-Medium.ttf");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Manrope";
+    src: url(".//fonts/Manrope-SemiBold.ttf");
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "Manrope";
+    src: url(".//fonts/Manrope-Bold.ttf");
+    font-weight: 900;
+}
