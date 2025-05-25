@@ -22,7 +22,7 @@ export function MainPage() {
       <>
         <header className="header container">
             <Logo />
-            <Button variant="primary">Авторизуйтесь</Button>
+            <Button variant="primary" onClick={useNavigate}>Авторизуйтесь</Button>
         </header>
         <main className="main container">
           <div className="docs-block">
