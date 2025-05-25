@@ -20,16 +20,11 @@ RUN apt-get update \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Create non-root user
-RUN adduser --disabled-password --gecos '' appuser
-
-# Copy project and set permissions
+# Copy project files and set permissions
 COPY . .
-COPY start.sh .
-RUN chown -R appuser:appuser /app \
-    && chmod +x /app/start.sh
-
-USER appuser
+RUN chmod +x start.sh \
+    && chown -R root:root /app \
+    && chmod -R a+rx /app
 
 # Run the application
 CMD ["./start.sh"] 
