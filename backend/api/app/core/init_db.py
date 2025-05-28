@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 
 from app.crud.user import get_user_by_email, create_user
 from app.schemas.user import UserCreate
+from app.core.security import get_password_hash, verify_password
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -33,9 +34,15 @@ def init_db(db: Session) -> None:
         admin = create_user(db, user_in)
         logger.info(f"Created red-admin user with email: {admin_email}")
         logger.info(f"Generated password for red-admin: {password}")
-        print(f"\n=== IMPORTANT: Red Admin Credentials ===")
-        print(f"Email: {admin_email}")
-        print(f"Password: {password}")
-        print(f"=======================================\n")
     else:
-        logger.info(f"Red-admin user already exists with email: {admin_email}") 
+        # Генерируем новый пароль для существующего пользователя
+        password = generate_password()
+        admin.hashed_password = get_password_hash(password)
+        db.commit()
+        logger.info(f"Updated red-admin user password with email: {admin_email}")
+        logger.info(f"Generated new password for red-admin: {password}")
+    
+    print(f"\n=== Red Admin Credentials ===")
+    print(f"Email: {admin_email}")
+    print(f"Password: {password}")
+    print(f"=======================================\n") 

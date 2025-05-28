@@ -1,10 +1,12 @@
 import { makeAutoObservable } from "mobx";
 import { IUser } from "../models/IUser.ts";
 import AuthService from "../services/AuthService.ts";
+import { toast } from 'react-toastify';
 
 export default class Store {
-    user = { } as IUser;
+    user = {} as IUser;
     isAuth = false;
+    isLoading = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -15,28 +17,49 @@ export default class Store {
     }
 
     setUser(user: IUser) {
-        this.user = user
+        this.user = user;
+    }
+
+    setLoading(bool: boolean) {
+        this.isLoading = bool;
     }
 
     async login(email: string, password: string) {
         try {
-            const responce = await AuthService.login(email, password);
-            localStorage.setItem('token', responce.data.accessToken);
+            this.setLoading(true);
+            const response = await AuthService.login(email, password);
+            localStorage.setItem('token', response.data.access_token);
             this.setAuth(true);
-            this.setUser(responce.data.user)
-        } catch (e) {
-            console.log(e.responce?.data?.message)
+            await this.checkAuth();
+            toast.success('Успешная авторизация');
+        } catch (e: any) {
+            toast.error(e.response?.data?.detail || 'Ошибка авторизации');
+            throw e;
+        } finally {
+            this.setLoading(false);
         }
-    } 
+    }
 
     async logout() {
         try {
-            const responce = await AuthService.logout();
+            await AuthService.logout();
             localStorage.removeItem('token');
             this.setAuth(false);
-            this.setUser({} as IUser)
-        } catch (e) {
-            console.log(e.responce?.data?.message)
+            this.setUser({} as IUser);
+            toast.success('Успешный выход из системы');
+        } catch (e: any) {
+            toast.error(e.response?.data?.detail || 'Ошибка при выходе из системы');
         }
-    } 
+    }
+
+    async checkAuth() {
+        try {
+            const response = await AuthService.checkAuth();
+            this.setAuth(true);
+            this.setUser(response.data);
+        } catch (e) {
+            this.setAuth(false);
+            this.setUser({} as IUser);
+        }
+    }
 }

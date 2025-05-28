@@ -5,7 +5,7 @@ from sqlalchemy.pool import NullPool
 
 SQLALCHEMY_DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql://postgres:postgres@db/edis_lite"
+    "postgresql://postgres:postgres@db/udms_d"
 )
 
 engine = create_engine(

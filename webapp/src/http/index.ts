@@ -1,22 +1,39 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios from 'axios';
 
-export const API_URL: string = 'http://localhost:5000/api';
-
-interface ApiInstance extends AxiosInstance {
-  // Можно добавить кастомные методы API если нужно
-}
-
-const $api: ApiInstance = axios.create({
-  withCredentials: true, // Исправлено withCredential -> withCredentials
-  baseURL: API_URL,
+const $api = axios.create({
+    baseURL: 'http://localhost:8020/api/v1',
+    headers: {
+        'Content-Type': 'application/json',
+    },
 });
 
 $api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token'); // Добавлены кавычки вокруг token
-  if (token && config.headers) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config; // Добавлен возврат конфига
+    const token = localStorage.getItem('token');
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
 });
+
+$api.interceptors.response.use(
+    (config) => {
+        return config;
+    },
+    async (error) => {
+        const originalRequest = error.config;
+        if (error.response?.status === 401 && error.config && !error.config._isRetry) {
+            originalRequest._isRetry = true;
+            try {
+                localStorage.removeItem('token');
+                if (!window.location.pathname.includes('/auth')) {
+                    window.location.href = '/auth';
+                }
+            } catch (e) {
+                console.log('Auth error');
+            }
+        }
+        throw error;
+    }
+);
 
 export default $api;

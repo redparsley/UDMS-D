@@ -1,25 +1,37 @@
+import React, { useContext, useEffect } from 'react';
 import { DocsList } from '../../components/MainPage/DocsList.tsx';
 import { Search } from "../../components/UI/Search.tsx";
 import { observer } from "mobx-react-lite";
-import React from "react";
 import { Header } from '../../components/UI/Header.tsx';
-
 import { Context } from "../../index.tsx";
-import Store from "../../store/store.ts";
-import {useContext} from "react";
 import { Navigate } from "react-router-dom";
+import { Spinner } from 'react-bootstrap';
 
 import "./MainPage.css"
 
 export const MainPage: React.FC = observer(() => {
- 
   const { store } = useContext(Context);
-      
-      if (!store.isAuth) {
-        // return <Navigate to="/auth" replace />;
-         return <Navigate to="/admin" replace />; // ! TEMP!!
-      }
-    
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      store.checkAuth();
+    }
+  }, []);
+
+  if (!store.isAuth) {
+    return <Navigate to="/auth" replace />;
+  }
+
+  if (store.isLoading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    );
+  }
+
   return (
     <>
       <Header />
