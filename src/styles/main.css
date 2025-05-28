@@ -10,32 +10,37 @@
 
 /*  ПЕРЕОПРЕДЕЛЕННЫЕ СТИЛИ BOOTSTRAP */
 
-.btn {
-    color: var(--dark-blue);
+/* .btn {
+      color: var(--dark-blue);
     background-color: var(--light-gray);
     border: var(--light-gray);
 }
 
 .btn:hover {
-    color: var(--dark-blue);
+      color: var(--dark-blue);
     background-color: var(--ice-blue);
     border: var(--ice-blue);
 }
 
 .btn:active {
+      color: var(--dark-blue);
     background-color: var(--ice-blue);
     border: var(--ice-blue);
 }
 
 .btn:focus {
+      color: var(--dark-blue);
     background-color: var(--ice-blue);
     border: var(--ice-blue);
 }
 
-
-/* Main Page styles */
+.btn:focus-visible {
+    color: #fff;
+    background-color: var(--info-blue);
+    border-color: var(--info-blue);
+    outline: 0;
+} */
 /* HEADER */
-
 .header {
     display: flex;
     /* justify-content: space-between; */
@@ -54,32 +59,7 @@
     width: auto;
 }
 
-/* MAIN */
-
-.docs-list {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    padding: 0;
-}
-
-.document {
-    width: 100%;
-    height: 3em;
-    padding: 0.8em 1em;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: all .2s ease-in;
-}
-
-.document:not(:last-child) {
-    margin-bottom: .5em ;
-}
-
-.document:hover {
-    transition: all .2s ease-in;
-}
+/* LOGO */
 
 .main-logo {
     height: 7em;

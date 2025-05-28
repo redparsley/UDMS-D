@@ -36,3 +36,23 @@
     src: url(".//fonts/Manrope-Bold.ttf");
     font-weight: 900;
 }
+
+
+/* переопределение bootsrtap стилей */
+
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--info-blue);
+    --bs-btn-border-color: var(--info-blue);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--accent-blue);
+    --bs-btn-hover-border-color: var(--accent-blue);
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--dark-blue);
+    --bs-btn-active-border-color: var(--accent-blue);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: var(--ice-blue);
+    --bs-btn-disabled-border-color: var(--ice-blue);
+}

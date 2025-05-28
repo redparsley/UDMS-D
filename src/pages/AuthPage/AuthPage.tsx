@@ -1,4 +1,4 @@
-import { Logo } from "../../components/UI/Logo";
+import { Logo } from "../../components/UI/Logo.tsx";
 import { AuthForm } from "../../components/Auth/Auth.tsx";
 import React from "react";
 import "react-bootstrap"
