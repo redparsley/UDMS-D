@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
-import { Context } from "../../index.tsx";
+import { Context } from "../../context.ts";
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 

@@ -7,9 +7,11 @@ export default class Store {
     user = {} as IUser;
     isAuth = false;
     isLoading = false;
+    isInitialized = false;
 
     constructor() {
         makeAutoObservable(this);
+        this.initialize();
     }
 
     setAuth(bool: boolean) {
@@ -24,12 +26,26 @@ export default class Store {
         this.isLoading = bool;
     }
 
+    setInitialized(bool: boolean) {
+        this.isInitialized = bool;
+    }
+
+    async initialize() {
+        try {
+            const token = localStorage.getItem('token');
+            if (token) {
+                await this.checkAuth();
+            }
+        } finally {
+            this.setInitialized(true);
+        }
+    }
+
     async login(email: string, password: string) {
         try {
             this.setLoading(true);
             const response = await AuthService.login(email, password);
             localStorage.setItem('token', response.data.access_token);
-            this.setAuth(true);
             await this.checkAuth();
             toast.success('Успешная авторизация');
         } catch (e: any) {
@@ -42,22 +58,32 @@ export default class Store {
 
     async logout() {
         try {
-            await AuthService.logout();
+            this.setLoading(true);
             localStorage.removeItem('token');
             this.setAuth(false);
             this.setUser({} as IUser);
             toast.success('Успешный выход из системы');
         } catch (e: any) {
-            toast.error(e.response?.data?.detail || 'Ошибка при выходе из системы');
+            toast.error('Ошибка при выходе из системы');
+        } finally {
+            this.setLoading(false);
         }
     }
 
     async checkAuth() {
         try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                this.setAuth(false);
+                this.setUser({} as IUser);
+                return;
+            }
+
             const response = await AuthService.checkAuth();
             this.setAuth(true);
             this.setUser(response.data);
         } catch (e) {
+            localStorage.removeItem('token');
             this.setAuth(false);
             this.setUser({} as IUser);
         }

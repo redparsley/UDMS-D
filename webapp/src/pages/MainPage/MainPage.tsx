@@ -3,24 +3,21 @@ import { DocsList } from '../../components/MainPage/DocsList.tsx';
 import { Search } from "../../components/UI/Search.tsx";
 import { observer } from "mobx-react-lite";
 import { Header } from '../../components/UI/Header.tsx';
-import { Context } from "../../index.tsx";
-import { Navigate } from "react-router-dom";
-import { Spinner } from 'react-bootstrap';
+import { Context } from "../../context.ts";
+import { Spinner, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 import "./MainPage.css"
 
 export const MainPage: React.FC = observer(() => {
   const { store } = useContext(Context);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
       store.checkAuth();
     }
   }, []);
-
-  if (!store.isAuth) {
-    return <Navigate to="/auth" replace />;
-  }
 
   if (store.isLoading) {
     return (
@@ -32,12 +29,24 @@ export const MainPage: React.FC = observer(() => {
     );
   }
 
+  const isAdmin = ['admin', 'red-admin'].includes(store.user.role);
+
   return (
     <>
       <Header />
       <main className="main container">
         <div className="docs-block">
-          <h1 className="main-header">Список документов</h1>
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            <h1 className="main-header mb-0">Список документов</h1>
+            {isAdmin && (
+              <Button 
+                variant="primary" 
+                onClick={() => navigate('/admin')}
+              >
+                Админ-панель
+              </Button>
+            )}
+          </div>
           <Search placeholder="Поиск по содержимому"/>
           <DocsList />
         </div>

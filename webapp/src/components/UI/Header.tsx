@@ -3,7 +3,7 @@ import { Logo } from "./Logo.tsx";
 import Button from 'react-bootstrap/Button';
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
-import { Context } from "../../index.tsx";
+import { Context } from "../../context.ts";
 import { useNavigate } from "react-router-dom";
 
 export const Header = observer(() => {
@@ -20,7 +20,7 @@ export const Header = observer(() => {
       <Logo />
       {store.isAuth && (
         <div className="d-flex align-items-center gap-3">
-          <span className="text-light">{store.user.full_name}</span>
+          <span>{store.user.full_name}</span>
           <Button variant="secondary" onClick={handleLogout}>
             Выйти из профиля
           </Button>

@@ -24,9 +24,11 @@ $api.interceptors.response.use(
         if (error.response?.status === 401 && error.config && !error.config._isRetry) {
             originalRequest._isRetry = true;
             try {
-                localStorage.removeItem('token');
-                if (!window.location.pathname.includes('/auth')) {
-                    window.location.href = '/auth';
+                if (!originalRequest.url?.includes('/users/me')) {
+                    localStorage.removeItem('token');
+                    if (!window.location.pathname.includes('/auth')) {
+                        window.location.href = '/auth';
+                    }
                 }
             } catch (e) {
                 console.log('Auth error');
