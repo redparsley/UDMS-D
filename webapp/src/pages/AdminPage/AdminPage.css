@@ -1,0 +1,42 @@
+/* Общие стили попапа */
+.edit-user-popup {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 20px;
+}
+
+/* Заголовок попапа */
+.edit-user-popup h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Форма с инпутами */
+.popup-form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* Стили для инпутов (растягивание на всю ширину) */
+.popup-form .inp .form-control {
+  width: 100%;
+}
+
+.popup-form .InputGroup {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+/* Футер с кнопкой */
+.popup-footer {
+  margin-top: auto;
+  padding-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.popup-footer .save-btn {
+  width: 120px;
+}

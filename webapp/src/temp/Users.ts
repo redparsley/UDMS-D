@@ -14,7 +14,7 @@ export const Users: IUser[] = [
         full_name: "Pilipenko Anastasiia Petrovna",
         email: "pilipenkoanast4sia@yandex.ru",
         isActivated: false,
-        role: "admin",
+        role: "red-admin",
         last_login_ip: "168.223.9.10",
         last_login_at: "28.05.2025",
         id: "002",
