@@ -1,0 +1,35 @@
+.fullscreen-container {
+    position: relative;
+    height: 100vh;
+}
+
+.center-main {
+    position: absolute ;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.auth-block {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.auth-block form {
+    width: 30vw;
+    height: 27vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.auth-block form .input-block .inp:not(:last-child){
+    margin-bottom: .7em;
+}
+
+.auth-block form .btn {
+    width: 50%;
+    align-self: center;
+}
