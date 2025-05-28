@@ -1,14 +1,32 @@
 version: '3.8'
 
 services:
-  api:
+  frontend:
     build:
-      context: .
+      context: ./webapp
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - "8010:80"
+    depends_on:
+      - api
+    networks:
+      - udms-network
+    # Health check for frontend
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  api:
+    build:
+      context: ./backend/api
+      dockerfile: Dockerfile
+    ports:
+      - "8020:8000"
     volumes:
-      - .:/app
+      - ./backend/api:/app
     environment:
       - POSTGRES_SERVER=db
       - POSTGRES_USER=postgres
@@ -16,10 +34,11 @@ services:
       - POSTGRES_DB=udms_d
       - PYTHONPATH=/app
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - udms-network
-    # Health check to ensure the API is running properly
+    # Health check for API
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
@@ -39,7 +58,7 @@ services:
       - "5432:5432"
     networks:
       - udms-network
-    # Health check to ensure the database is running properly
+    # Health check for database
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
@@ -49,7 +68,6 @@ services:
 
 volumes:
   postgres_data:
-    # Use local driver for better cross-platform compatibility
     driver: local
 
 networks:

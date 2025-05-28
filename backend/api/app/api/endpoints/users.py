@@ -2,7 +2,7 @@ from typing import Any, List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app.api.deps import get_current_active_admin, get_current_user, get_db
+from app.api.deps import get_current_active_admin, get_current_red_admin, get_current_user, get_db
 from app.crud.user import create_user, delete_user, get_user_by_email, get_users, update_user
 from app.models.user import User as UserModel
 from app.schemas.user import User, UserCreate, UserUpdate
@@ -57,6 +57,13 @@ def create_user_route(
     """
     Create new user.
     """
+    # Check if the current user has permission to create the requested role
+    if current_user.role == "admin" and user_in.role in ["admin", "red-admin"]:
+        raise HTTPException(
+            status_code=403,
+            detail="Regular admins can only create specialist users",
+        )
+    
     user = get_user_by_email(db, email=user_in.email)
     if user:
         raise HTTPException(
@@ -70,10 +77,10 @@ def create_user_route(
 def delete_user_route(
     user_id: str,
     db: Session = Depends(get_db),
-    current_user: UserModel = Depends(get_current_active_admin),
+    current_user: UserModel = Depends(get_current_red_admin),
 ) -> Any:
     """
-    Delete a user.
+    Delete a user. Only red-admin can delete users.
     """
     user = delete_user(db, user_id)
     if not user:
