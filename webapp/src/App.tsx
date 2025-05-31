@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import {AuthPage} from './pages/AuthPage/AuthPage.tsx';
 import {MainPage} from './pages/MainPage/MainPage.tsx';
 import {AdminPage} from './pages/AdminPage/AdminPage.tsx';
+import { EditDocsPage } from './pages/EditDocsPage/EditDocsPage.tsx';
 import { ProtectedRoute } from './components/ProtectedRoute.tsx';
 import { Context } from './context.ts';
 
@@ -33,9 +34,12 @@ function App() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
+        aria-label="Notification"
       />
       <Routes>
-        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/auth" element={
+        <AuthPage />
+        } />
         <Route path="/" element={
           <ProtectedRoute>
             <MainPage />
@@ -44,6 +48,11 @@ function App() {
         <Route path="/admin" element={
           <ProtectedRoute requireAdmin>
             <AdminPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/edit-document" element={
+          <ProtectedRoute>
+            <EditDocsPage />
           </ProtectedRoute>
         } />
       </Routes>

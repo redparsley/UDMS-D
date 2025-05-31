@@ -23,7 +23,7 @@ export const MainPage: React.FC = observer(() => {
     return (
       <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
         <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
+          <span className="visually-hidden">Загрузка...</span>
         </Spinner>
       </div>
     );

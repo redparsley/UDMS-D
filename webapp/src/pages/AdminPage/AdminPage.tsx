@@ -1,38 +1,52 @@
-import { Search } from "../../components/UI/Search.tsx";
 import { observer } from "mobx-react-lite";
-import { Header } from "../../components/UI/Header.tsx";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Button, Form, InputGroup } from "react-bootstrap";
+import { Header } from "../../components/UI/Header.tsx";
 import { Popup } from "../../components/UI/Popup.tsx";
-
-
-import { Users } from "../../temp/Users.ts"
 import { IUser } from "../../models/IUser.ts";
-import "./AdminPage.css"
+import { fetchUsers } from "../../services/UserService";
+import "./AdminPage.css";
 
 export const AdminPage: React.FC = observer(() => {
 
   const [popupIsOpen, setPopupIsOpen] = useState(false);
-
-  const [users, setUsers] = useState<IUser[]>(Users);
+  const [users, setUsers] = useState<IUser[]>([]);
   const [editingUser, setEditingUser] = useState<IUser | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Обработчик клика по строке
+  // Обработчик клика
   const handleBtnClick = (user: IUser) => {
     setEditingUser(user);
   };
 
+  useEffect(() => {
+    const loadUsers = async () => {
+      try {
+        const data = await fetchUsers();
+        setUsers(data);
+      } catch (err) {
+        setError('Failed to fetch users');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadUsers();
+  }, []);
+
   // Сохранение изменений
   const handleSave = (updatedUser: IUser) => {
-    setUsers(Users.map(user =>
+    setUsers(users.map(user =>
       user.id === updatedUser.id ? updatedUser : user
     ));
     setEditingUser(null);
   };
 
-  const remove = () => {
 
-  }
+  if (loading) return <div>Загрузка...</div>;
+  if (error) return <div>Ошибка: {error}</div>;
 
   return (
     <>
@@ -59,7 +73,7 @@ export const AdminPage: React.FC = observer(() => {
                 <td>{user.last_login_at}</td>
                 <td>
                   <Button
-                    onClick={() => handleBtnClick(user)}
+                    onClick={() => setEditingUser(user)}
                   >
                     Изменить
                   </Button>
@@ -81,7 +95,11 @@ export const AdminPage: React.FC = observer(() => {
             <div className="edit-user-popup">
               <h2>Редактировать пользователя</h2>
 
-              <Form className="popup-form">
+              <Form className="popup-form"
+                onSubmit={e => {
+                  e.preventDefault();
+                  handleSave(editingUser);
+                }}>
                 <Form.Group controlId="validationFullName" className="inp">
                   <Form.Label>ФИО</Form.Label>
                   <InputGroup hasValidation>

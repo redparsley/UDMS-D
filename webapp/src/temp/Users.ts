@@ -1,40 +1,22 @@
 import { IUser } from "../models/IUser";
 
-export const Users: IUser[] = [
-    {
-        full_name: "Pilipenko Anastasiia Petrovna",
-        email: "pilipenkoanast4sia@yandex.ru",
-        isActivated: false,
-        role: "admin",
-        last_login_ip: "168.223.9.10",
-        last_login_at: "28.05.2025",
-        id: "001",
-    },
-        {
-        full_name: "Pilipenko Anastasiia Petrovna",
-        email: "pilipenkoanast4sia@yandex.ru",
-        isActivated: false,
-        role: "red-admin",
-        last_login_ip: "168.223.9.10",
-        last_login_at: "28.05.2025",
-        id: "002",
-    },
-        {
-        full_name: "Pilipenko Anastasiia Petrovna",
-        email: "pilipenkoanast4sia@yandex.ru",
-        isActivated: false,
-        role: "admin",
-        last_login_ip: "168.223.9.10",
-        last_login_at: "28.05.2025",
-        id: "004",
-    },
-        {
-        full_name: "Pilipenko Anastasiia Petrovna",
-        email: "pilipenkoanast4sia@yandex.ru",
-        isActivated: false,
-        role: "admin",
-        last_login_ip: "168.223.9.10",
-        last_login_at: "28.05.2025",
-        id: "031",
-    },
-];
+export let Users: IUser[] = []; // Экспортируемый массив пользователей
+
+export async function getUsers(): Promise<IUser[]> {
+  try {
+    const response = await fetch("/api/users");
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    const userData = await response.json(); // Получаем ОДНОГО пользователя
+
+    // Если сервер возвращает одного пользователя, добавляем его в массив
+    Users = [userData]; // Обернули в массив, чтобы Users оставался IUser[]
+
+    return Users; 
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    Users = []; // Очищаем массив в случае ошибки
+    return Users;
+  }
+}
