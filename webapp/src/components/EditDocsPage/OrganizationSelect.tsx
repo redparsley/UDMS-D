@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Option } from './Option';
+import { Form } from 'react-bootstrap'
 
 export const OrganizationSelect: React.FC = () => {
-  const [selectedValue, setSelectedValue] = useState<string>('');
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
   const options: Option[] = [
     { value: 'finance', label: 'Факультет финансов' },
     { value: 'international', label: 'Факультет международных отношений и бизнеса' },
@@ -27,32 +25,17 @@ export const OrganizationSelect: React.FC = () => {
     { value: 'college', label: 'Колледж многоуровневого профессионального образования' },
   ];
 
-  const handleSelect = (value: string, label: string) => {
-    setSelectedValue(label);
-    setIsOpen(false);
-  };
-
   return (
-    <div>
-      <div
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        {selectedValue || 'Выберите факультет/институт'}
-      </div>
-      
-      {isOpen && (
-        <div>
-          {options.map((option) => (
-            <div
-              key={option.value}
-              className="p-2 hover:bg-gray-100 cursor-pointer"
-              onClick={() => handleSelect(option.value, option.label)}
-            >
-              {option.label}
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
+      <Form.Select>
+        <option>Выберите вид образования</option>
+        {options.map((option) => (
+          <option
+            key={option.value}
+            id={option.value}
+          >
+            {option.label}
+          </option>
+        ))}
+      </Form.Select>
+  )
+}

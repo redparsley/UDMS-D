@@ -29,23 +29,13 @@ export const MainPage: React.FC = observer(() => {
     );
   }
 
-  const isAdmin = ['admin', 'red-admin'].includes(store.user.role);
-
   return (
     <>
-      <Header />
+      <Header heading='Список документов' />
       <main className="main container">
         <div className="docs-block">
           <div className="d-flex justify-content-between align-items-center mb-4">
-            <h1 className="main-header mb-0">Список документов</h1>
-            {isAdmin && (
-              <Button 
-                variant="primary" 
-                onClick={() => navigate('/admin')}
-              >
-                Админ-панель
-              </Button>
-            )}
+            
           </div>
           <Search placeholder="Поиск по содержимому"/>
           <DocsList />

@@ -50,7 +50,7 @@ export const AdminPage: React.FC = observer(() => {
 
   return (
     <>
-      <Header />
+      <Header heading="Админ-панель"/>
       <main className="main container">
         <Table>
           <thead>
@@ -59,6 +59,7 @@ export const AdminPage: React.FC = observer(() => {
               <th>Email</th>
               <th>Роль</th>
               <th>Дата последней авторизации</th>
+              <th></th>
               <th></th>
             </tr>
           </thead>

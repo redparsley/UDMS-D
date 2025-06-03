@@ -11,10 +11,9 @@
 /* HEADER */
 .header {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     padding: 1em 2em;
-    height: 8em;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
 } 
 
 .header .main-logo {
@@ -26,11 +25,28 @@
     width: auto;
 }
 
+.header-top, .header-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-username {
+    background-image: url("./img/profile-svgrepo-com.svg");
+    background-repeat: no-repeat;
+    padding-left: 1.7em;
+    background-size: contain;
+}
+
 /* LOGO */
 
 .main-logo {
     height: 7em;
     width: auto;
+}
+
+.profile-icon {
+    width: 1em;
 }
 
 /* LIST ITEMS */

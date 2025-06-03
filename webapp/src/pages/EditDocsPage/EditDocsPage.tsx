@@ -13,10 +13,10 @@ export function EditDocsPage() {
     const { store } = useContext(Context);
     return (
         <>
-        <Header/>
+        <Header heading={'Редактирование документа'}/>
         <main className="main container">
             <Form noValidate>
-                <div className="input-block">
+                <div className="input-block mb-4">
                     <Form.Group controlId="document_id" className="inp">
                         <Form.Label>№ документа</Form.Label>
                         <InputGroup hasValidation>
@@ -33,7 +33,7 @@ export function EditDocsPage() {
                         </InputGroup>
                     </Form.Group>
 
-                    <FormGroup>
+                    <FormGroup className="inp">
                         <OrganizationSelect />
                     </FormGroup>
 
@@ -52,15 +52,15 @@ export function EditDocsPage() {
                         </InputGroup>
                     </Form.Group>
 
-                    <FormGroup>
+                    <FormGroup className="inp">
                         <DocumentTypeSelect />
                     </FormGroup>
 
-                    <FormGroup>
+                    <FormGroup className="inp">
                         <EducationTypeSelect />
                     </FormGroup>
 
-                    <FormGroup>
+                    <FormGroup className="inp">
                         <FinanceSelect />
                     </FormGroup>
 
@@ -105,7 +105,6 @@ export function EditDocsPage() {
                             </Form.Control.Feedback>
                         </InputGroup>
                     </Form.Group>
-
                 </div>
 
                 <Button type="submit" disabled={store.isLoading}>

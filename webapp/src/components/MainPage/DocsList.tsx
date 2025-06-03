@@ -17,10 +17,10 @@ export const DocsList: React.FC = () => {
             className='document'
             as="li" // Явно указываем, что это элемент списка
             onClick={() => navigate('/edit-document')}
-            // style={{cursor: 'pointer'}}
+            style={{cursor: 'pointer'}}
           >
-            <p className="name">{doc.name}</p>
-            <p className="status">{doc.status}</p>
+            <span className="document-name">{doc.name}</span>
+            <span className="document-status">{doc.status}</span>
           </ListGroup.Item>
         ))}
       </ul>

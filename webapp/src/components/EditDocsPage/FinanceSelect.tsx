@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Option } from "./Option";
+import {Form} from 'react-bootstrap'
 
 const FinanceSelect: React.FC = () => {
   const [selectedValue, setSelectedValue] = useState<string>('');
@@ -16,24 +17,17 @@ const FinanceSelect: React.FC = () => {
   };
 
   return (
-    <div>
-      <div onClick={() => setIsOpen(!isOpen)}>
-        {selectedValue || 'Выберите вид финансирования'}
-      </div>
-      
-      {isOpen && (
-        <div>
+       <Form.Select>
+        <option>Выберите вид финансирования</option>
           {options.map((option) => (
-            <div
+            <option
               key={option.value}
               onClick={() => handleSelect(option.value, option.label)}
             >
               {option.label}
-            </div>
+            </option>
           ))}
-        </div>
-      )}
-    </div>
+      </Form.Select>
   );
 };
 
