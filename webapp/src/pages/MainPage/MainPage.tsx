@@ -6,10 +6,13 @@ import { Header } from '../../components/UI/Header.tsx';
 import { Context } from "../../context.ts";
 import { Spinner, Button } from 'react-bootstrap';
 
+import { useNavigate } from 'react-router-dom';
+
 import "./MainPage.css"
 
 export const MainPage: React.FC = observer(() => {
   const { store } = useContext(Context);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -31,6 +34,13 @@ export const MainPage: React.FC = observer(() => {
     <>
       <Header heading='Список документов' />
       <main className="main container">
+        <Button
+          variant="success"
+          onClick={() => navigate("/create-document")}
+          className="mb-3"
+        >
+          Добавить документ
+        </Button>
         <div className="docs-block">
           <div className="d-flex justify-content-between align-items-center mb-4">
             

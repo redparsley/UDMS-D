@@ -9,11 +9,11 @@ import FinanceSelect from "../../components/EditDocsPage/FinanceSelect.tsx";
 
 import { Header } from "../../components/UI/Header.tsx";
 
-export function EditDocsPage() {
-    const { store } = useContext(Context);
+export function CreateDocsPage() {
+ const { store } = useContext(Context);
     return (
         <>
-        <Header heading={'Редактирование документа'}/>
+        <Header heading={'Создание документа'}/>
         <main className="main container">
             <Form noValidate>
                 <div className="input-block mb-4">
@@ -23,8 +23,7 @@ export function EditDocsPage() {
                             <Form.Control
                                 type="number"
                                 placeholder="№ документа"
-                                //  required
-                                disabled
+                                required
                             // value={document.id}
                             />
                             <Form.Control.Feedback type="invalid">

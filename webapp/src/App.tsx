@@ -1,10 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import {AuthPage} from './pages/AuthPage/AuthPage.tsx';
-import {MainPage} from './pages/MainPage/MainPage.tsx';
-import {AdminPage} from './pages/AdminPage/AdminPage.tsx';
-import { EditDocsPage } from './pages/EditDocsPage/EditDocsPage.tsx';
 import { ProtectedRoute } from './components/ProtectedRoute.tsx';
 import { Context } from './context.ts';
 
@@ -12,7 +8,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import "./styles/var.css" 
 import "./styles/main.css"
+
+import {AuthPage} from './pages/AuthPage/AuthPage.tsx';
+import {MainPage} from './pages/MainPage/MainPage.tsx';
+import {AdminPage} from './pages/AdminPage/AdminPage.tsx';
 import { CreateUserPage } from './pages/CreateUserPage/CreateUserPage.tsx';
+import { CreateDocsPage } from './pages/CreateDocsPage/CreateDocsPage.tsx';
+import { EditDocsPage } from './pages/EditDocsPage/EditDocsPage.tsx';
+
 
 function App() {
   const { store } = useContext(Context);
@@ -59,6 +62,11 @@ function App() {
          <Route path="/create-user" element={
           <ProtectedRoute>
             <CreateUserPage />
+          </ProtectedRoute>
+        } />
+         <Route path="/create-document" element={
+          <ProtectedRoute>
+            <CreateDocsPage />
           </ProtectedRoute>
         } />
       </Routes>

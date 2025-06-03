@@ -1,13 +1,17 @@
 import React, { useContext } from "react"
 import { Header } from "../../components/UI/Header.tsx";
-import { Form, Button, InputGroup, FormGroup } from 'react-bootstrap'
+import { Form, Button, InputGroup, Tooltip } from 'react-bootstrap'
 import { Context } from "../../context.ts";
-
-
 
 export function CreateUserPage() {
     const { store } = useContext(Context);
     const isAdmin = ['admin', 'red-admin'].includes(store.user.role);
+
+//     const Tooltip = (
+// <Tooltip placement="top" className="in" id="tooltip-top">
+//                         Если стоит данная галочка, то выгрузка документов из Pyrus в Контур.Сайн происходит автоматически
+//                     </Tooltip>
+//     )
 
     return (
         <>
@@ -100,6 +104,20 @@ export function CreateUserPage() {
                             Пожалуйста, укажите роль сотрудника
                         </Form.Control.Feedback>
                     </Form.Group>
+                    
+                      {isAdmin && (
+                               <>
+                            <Form.Check
+                                inline
+                                label="Использовать бот"
+                                name="employee_role"
+                                type="checkbox"
+                                id="inline-checkbox-super-admin"
+                                value="super_admin"
+                            />
+                            
+                               </>
+                            )}
 
                     <Button type="submit" disabled={store.isLoading}>
                         {store.isLoading ? 'Загрузка...' : 'Сохранить изменения'}
