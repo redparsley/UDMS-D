@@ -6,6 +6,7 @@ import { Popup } from "../../components/UI/Popup.tsx";
 import { IUser } from "../../models/IUser.ts";
 import { fetchUsers } from "../../services/UserService";
 import "./AdminPage.css";
+import { useNavigate } from "react-router-dom";
 
 export const AdminPage: React.FC = observer(() => {
 
@@ -44,6 +45,7 @@ export const AdminPage: React.FC = observer(() => {
     setEditingUser(null);
   };
 
+  const navigate = useNavigate();
 
   if (loading) return <div>Загрузка...</div>;
   if (error) return <div>Ошибка: {error}</div>;
@@ -52,6 +54,13 @@ export const AdminPage: React.FC = observer(() => {
     <>
       <Header heading="Админ-панель"/>
       <main className="main container">
+        <Button 
+        variant="success"
+        onClick={() => navigate("/create-user")}
+        className="mb-3"
+        >
+          Добавить пользователя
+        </Button>
         <Table>
           <thead>
             <tr>

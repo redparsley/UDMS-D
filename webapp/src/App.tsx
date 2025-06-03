@@ -12,6 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import "./styles/var.css" 
 import "./styles/main.css"
+import { CreateUserPage } from './pages/CreateUserPage/CreateUserPage.tsx';
 
 function App() {
   const { store } = useContext(Context);
@@ -53,6 +54,11 @@ function App() {
         <Route path="/edit-document" element={
           <ProtectedRoute>
             <EditDocsPage />
+          </ProtectedRoute>
+        } />
+         <Route path="/create-user" element={
+          <ProtectedRoute>
+            <CreateUserPage />
           </ProtectedRoute>
         } />
       </Routes>

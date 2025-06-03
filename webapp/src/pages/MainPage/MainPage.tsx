@@ -5,13 +5,11 @@ import { observer } from "mobx-react-lite";
 import { Header } from '../../components/UI/Header.tsx';
 import { Context } from "../../context.ts";
 import { Spinner, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 
 import "./MainPage.css"
 
 export const MainPage: React.FC = observer(() => {
   const { store } = useContext(Context);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
