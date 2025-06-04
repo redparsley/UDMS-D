@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 
 export const AdminPage: React.FC = observer(() => {
 
-  const [popupIsOpen, setPopupIsOpen] = useState(false);
   const [users, setUsers] = useState<IUser[]>([]);
   const [editingUser, setEditingUser] = useState<IUser | null>(null);
   const [loading, setLoading] = useState(true);

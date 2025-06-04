@@ -1,9 +1,19 @@
 import React from 'react';
-import { Option } from './Option';
 import { Form } from 'react-bootstrap';
 
-const DocumentTypeSelect: React.FC = () => {
+// Тип для опции
+export interface Option {
+  value: string;
+  label: string;
+}
 
+// Пропсы компонента
+interface DocumentTypeSelectProps {
+  value?: string; // текущее выбранное значение
+  onChange?: (value: string) => void; // обработчик изменения
+}
+
+const DocumentTypeSelect: React.FC<DocumentTypeSelectProps> = ({ value, onChange }) => {
   const options: Option[] = [
     { value: 'contract', label: 'Договор' },
     { value: 'act', label: 'Акт' },
@@ -11,19 +21,29 @@ const DocumentTypeSelect: React.FC = () => {
     { value: 'termination', label: 'Соглашение о расторжении' },
   ];
 
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (onChange) {
+      onChange(e.target.value);
+    }
+  };
+
   return (
-            <Form.Select>
-            <option>Выберите тип документа</option>
-            {options.map((option) => (
-              <option
-                id={option.value}
-                key={option.value}
-              >
-                {option.label}
-              </option>
-            ))}
-          </Form.Select>
-      )
+    <Form.Select 
+      value={value || ''} 
+      onChange={handleChange}
+      aria-label="Выберите тип документа"
+    >
+      <option value="">Выберите тип документа</option>
+      {options.map((option) => (
+        <option
+          key={option.value}
+          value={option.value}
+        >
+          {option.label}
+        </option>
+      ))}
+    </Form.Select>
+  );
 };
 
 export default DocumentTypeSelect;

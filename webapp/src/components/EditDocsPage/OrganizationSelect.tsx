@@ -2,7 +2,12 @@ import React from 'react';
 import { Option } from './Option';
 import { Form } from 'react-bootstrap'
 
-export const OrganizationSelect: React.FC = () => {
+interface OrganizationSelectProps {
+  value?: string; // текущее выбранное значение
+  onChange?: (value: string) => void; // обработчик изменения
+}
+
+export const OrganizationSelect: React.FC<OrganizationSelectProps> = ({ value, onChange }) => {
   const options: Option[] = [
     { value: 'finance', label: 'Факультет финансов' },
     { value: 'international', label: 'Факультет международных отношений и бизнеса' },
@@ -25,17 +30,27 @@ export const OrganizationSelect: React.FC = () => {
     { value: 'college', label: 'Колледж многоуровневого профессионального образования' },
   ];
 
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (onChange) {
+      onChange(e.target.value);
+    }
+  };
+
+
   return (
-      <Form.Select>
-        <option>Выберите вид образования</option>
-        {options.map((option) => (
-          <option
-            key={option.value}
-            id={option.value}
-          >
-            {option.label}
-          </option>
-        ))}
-      </Form.Select>
+    <Form.Select
+      value={value || ''}
+      onChange={handleChange}
+    >
+      <option>Выберите вид образования</option>
+      {options.map((option) => (
+        <option
+          key={option.value}
+          id={option.value}
+        >
+          {option.label}
+        </option>
+      ))}
+    </Form.Select>
   )
 }

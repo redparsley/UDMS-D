@@ -107,7 +107,11 @@ export function CreateDocsPage() {
                     </Form.Group>
                 </div>
 
-                <Button type="submit" disabled={store.isLoading}>
+                <Button 
+                type="submit" 
+                disabled={store.isLoading}
+                // onClick={}
+                >
                     {store.isLoading ? 'Загрузка...' : 'Сохранить изменения'}
                 </Button>
             </Form>

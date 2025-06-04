@@ -1,33 +1,41 @@
-import React, { useState } from "react";
+import React from "react";
+import { Form } from 'react-bootstrap';
 import { Option } from "./Option";
-import {Form} from 'react-bootstrap'
 
-const FinanceSelect: React.FC = () => {
-  const [selectedValue, setSelectedValue] = useState<string>('');
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+// Пропсы компонента
+interface FinanceSelectProps {
+  value?: string; // текущее выбранное значение (value опции)
+  onChange?: (value: string) => void; // обработчик изменения
+}
 
+const FinanceSelect: React.FC<FinanceSelectProps> = ({ value, onChange }) => {
   const options: Option[] = [
     { value: 'subsidy', label: 'Субсидия' },
     { value: 'pdd', label: 'ПДД' },
   ];
 
-  const handleSelect = (value: string, label: string) => {
-    setSelectedValue(label);
-    setIsOpen(false);
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (onChange) {
+      onChange(e.target.value);
+    }
   };
-
+  
   return (
-       <Form.Select>
-        <option>Выберите вид финансирования</option>
-          {options.map((option) => (
-            <option
-              key={option.value}
-              onClick={() => handleSelect(option.value, option.label)}
-            >
-              {option.label}
-            </option>
-          ))}
-      </Form.Select>
+    <Form.Select
+      value={value || ''}
+      onChange={handleChange}
+      aria-label="Выберите вид финансирования"
+    >
+      <option value="">Выберите вид финансирования</option>
+      {options.map((option) => (
+        <option
+          key={option.value}
+          value={option.value}
+        >
+          {option.label}
+        </option>
+      ))}
+    </Form.Select>
   );
 };
 

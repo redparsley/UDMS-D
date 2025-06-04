@@ -36,7 +36,7 @@ export const MainPage: React.FC = observer(() => {
       <main className="main container">
         <Button
           variant="success"
-          onClick={() => navigate("/create-document")}
+          onClick={() => {navigate("/create-document")}}
           className="mb-3"
         >
           Добавить документ
